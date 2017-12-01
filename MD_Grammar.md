@@ -77,8 +77,17 @@
 <br>
 插入图片：github中README.md关联图片的图片地址是有一定的格式的，其格式如下：<br>
 https://github.com/用户名/repository仓库名/raw/分支名master/图片文件夹名称/AAA.png<br>
-![](https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png)
+<br><br>
 
+
+# 6、代码块
+在需要高亮的代码块的前一行及后一行使用三个反引号“`”，同时第一行反引号后面表面代码块所使用的语言，如下：
+
+```ruby
+require 'redcarpet'
+markdown = Redcarpet.new("Hello World!")
+puts markdown.to_html
+```
 
 
 
