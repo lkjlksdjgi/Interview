@@ -7,10 +7,10 @@ onCreate(创建) ---> onStart(可见，但不可交互) ---> onResume(可见可�
 - 在实际应用场景中，假设A Activity位于栈顶，此时用户操作，从A Activity跳转到B Activity。那么对AB来说，具体会回调哪些生命周期中的方法呢？回调方法的具体回调顺序又是怎么样的呢？<br>
  当用户点击A中按钮来到B时，假设B全部遮挡住了A，将依次执行A:onPause -> B:onCreate -> B:onStart -> B:onResume -> A:onStop。<br>
  <br>
+ 
 - 其实在实际应用场景中，有一种非常常见的，就是横竖屏切换，此时的Activity生命周期是什么样的呢？<br>
 当横竖屏切换的时候，我们会发现Activity生命周期方法依次是：onPause --> ***onSaveInstanceState*** --> onStop --> onDestory -->onCreate --> onStart -->***onRestoreInstanceState*** -->onResume。可以发现，当横竖屏的时候Activity是先销毁在创建的。Activity因横竖屏而异常销毁，Android系统会自动调用onSaveInstanceState来保存Activity当前状态信息，所以我们可以在onSaveInstanceState方法里面保存一些信息以便Activity重建之后恢复数据。Activity被重新创建之后，系统还会去调用onRestoreInstanceState方法，当然通常情况下我们会根据判断onCreate方法里面bundle有没有数据来做相应的初始化。<br>
-
- ***onSaveInstanceState和onRestoreInstanceState只有在Activity异常终止时才会被调用的，正常情况是不会调用这两个方法的*** <br>
+onSaveInstanceState和onRestoreInstanceState只有在Activity异常终止时才会被调用的，正常情况是不会调用这两个方法的<br>
  <br>
  - 上面说到因横竖屏而导致Activity异常销毁然后又重建，那有没有办法使其不重建呢？答案是有的。<br>
     我们可以给Activity指定configChange属性，当我们不想Activity在屏幕旋转后导致销毁重建时，可以设置configChange=“orientation”；当SDK版本大于13时，我们还需额外添加一个“screenSize”的值.<br>
