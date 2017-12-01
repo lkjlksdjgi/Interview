@@ -76,7 +76,7 @@
 
 <br>
 插入图片：github中README.md关联图片的图片地址是有一定的格式的，其格式如下：<br>
-https://github.com/用户名/repository仓库名/raw/分支名master/图片文件夹名称/AAA.png
+https://github.com/用户名/repository仓库名/raw/分支名master/图片文件夹名称/AAA.png<br>
 ![](https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png)
 
 
