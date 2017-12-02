@@ -17,7 +17,14 @@ onSaveInstanceState和onRestoreInstanceState只有在Activity异常终止时才�
       我们可以给Activity指定configChange属性，当我们不想Activity在屏幕旋转后导致销毁重建时，可以设置configChange=“orientation”；当SDK版本大于13时，我们还需额外添加一个“screenSize”的值.<br>
     对于这两个值含义如下：<br>
     - orientation :屏幕方向发生变化，配置该参数可以解决横竖屏切换时，Activity重建问题（API<13） <br>
-    - screenSize :当设备旋转时，屏幕尺寸发生变化，API>13后必须配置该参数才可以保证横竖切换不会导致Activity重建。 
+    - screenSize :当设备旋转时，屏幕尺寸发生变化，API>13后必须配置该参数才可以保证横竖切换不会导致Activity重建。 <br>
+   
+－　内存不足，导致优先级低的Activity被销毁<br>
+Activity优先级是与Activity运行状态一一对应的<br>
+1. 前台Activity---正在和用户交互的，优先级最高<br>
+2. 可见的非前台Activity --- 比如说 弹出一个对话框，Activity可见但不可交互<br>
+3. 后台Activity --- 执行了onStop方法之后的Activity<br>
+当系统内存不足时，会先销毁优先级低的Activity。这个时候的Activity销毁和创建的生命周期与上面横竖屏一样。
      
 
 
