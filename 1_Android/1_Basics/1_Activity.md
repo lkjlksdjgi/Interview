@@ -23,7 +23,16 @@ Activity优先级是与Activity运行状态一一对应的<br>
 (2). 可见的非前台Activity --- 比如说 弹出一个对话框，Activity可见但不可交互<br>
 (3). 后台Activity --- 执行了onStop方法之后的Activity<br>
 当系统内存不足时，会先销毁优先级低的Activity。这个时候的Activity销毁和创建的生命周期与上面横竖屏一样。
-     
+<br>
+<br>
+
+# 二、Activity启动模式
+#### 1、Activity4种启动模式
+标准模式（standard）<br>
+栈顶复用模式（singleTop）<br>
+栈内复用模式（singleTask）<br>
+单例模式（singleInstance）<br>
+Activity的管理是采用任务栈的形式，任务栈采用 ***“后进先出”*** 的栈结构。
 
 
 
