@@ -162,7 +162,11 @@ firstShareelementView：这个参数是第一个Activity中需要实现共享元
         ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this, first, second);
         ActivityCompat.startActivity(this,intent, transitionActivityOptions.toBundle());
 ```
-
+##### 5、自定义shared element动画效果
+具体步骤如下：<br>
+###### 1、创建一个移动轨迹路径类PathMotion类
+我们可以创建ArcMotion对象，ArcMotion是PathMotion子类，是个曲线路径。<br>
+[点击进入ArcMotion文档]<https://developer.android.com/reference/android/transition/ArcMotion.html>
 
 
 
