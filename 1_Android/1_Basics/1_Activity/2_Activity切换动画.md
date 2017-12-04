@@ -176,8 +176,8 @@ firstShareelementView：这个参数是第一个Activity中需要实现共享元
 ######  2、定义ChangeBounds类
 我们自定义一个继承ChangeBounds的类，主要重写createAnimator函数，即创建你要执行的动画。这个函数有3个参数
 ```
-1、ViewGroup sceneRoot：屏幕根View，即DecorView，第二个Activity的DecorView。 <br>
-2、TransitionValues startValues ：属性动画的起始属性值，TransitionValues 对象内部有各Map类型的属性values，用于保存需要执行属性动画的属性。这个里面的属性值是在函数captureStartValues里放置，因此你可以重写captureStartValues函数，并把你自定义的属性动画中的属性放进去。 <br>
+1、ViewGroup sceneRoot：屏幕根View，即DecorView，第二个Activity的DecorView。 
+2、TransitionValues startValues ：属性动画的起始属性值，TransitionValues 对象内部有各Map类型的属性values，用于保存需要执行属性动画的属性。这个里面的属性值是在函数captureStartValues里放置，因此你可以重写captureStartValues函数，并把你自定义的属性动画中的属性放进去。 
 3、TransitionValues endValues ：与startValues类似，表示属性动画结束时的属性值。可以通过重写captureEndValues函数，并把你自定义的属性动画里面的最终属性值放进去。
 ```
 
