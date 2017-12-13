@@ -14,21 +14,21 @@
 #### 二、Collection接口
 Collection是Set,Queue,List的父接口，接口中定义的方法如下：<br>
 ```
-int size();  -->  返回此collection中元素个数
-boolean isEmpty();--> 如果此collection不包含元素，则返回true
-boolean contains(Object o);--> 如果此collection包含指定的元素，则返回true
-Iterator<E> iterator();--> 返回在此collection的元素上进行迭代的迭代器
-Object[] toArray();--> 返回包含此collection中所有元素的数组
-<T> T[] toArray(T[] a);--> 返回包含此collection中所有元素的数组；返回数组的运行时类型与指定数组的运行时类型相同
-boolean add(E e);--> 确保此collection包含指定的元素（可选操作）
-boolean remove(Object o);--> 从此collection中移除指定元素的单个实例，如果存在的话
-boolean containsAll(Collection<?> c);--> 如果此collection包含指定collection中的所有元素，则返回true
-boolean addAll(Collection<? extends E> c);--> 将指定collection中的所有元素都添加到此collection中（可选操作）
-boolean removeAll(Collection<?> c);--> 移除此collection中那些也包含在指定collection中的所有元素
-boolean retainAll(Collection<?> c);--> 仅保留此collection中那些也包含在指定collection中的所有元素
-void clear();--> 移除此collection种的所有操作（可选操作）
-boolean equals(Object o);--> 比较此collection与指定对象是否相等
-int hashCode();--> 返回此collection的哈希码值
+int size();                                   返回此collection中元素个数
+boolean isEmpty();                            如果此collection不包含元素，则返回true
+boolean contains(Object o);                   如果此collection包含指定的元素，则返回true
+Iterator<E> iterator();                       返回在此collection的元素上进行迭代的迭代器
+Object[] toArray();                           返回包含此collection中所有元素的数组
+<T> T[] toArray(T[] a);                       返回包含此collection中所有元素的数组；返回数组的运行时类型与指定数组的运行时类型相同
+boolean add(E e);                             确保此collection包含指定的元素（可选操作）
+boolean remove(Object o);                     从此collection中移除指定元素的单个实例，如果存在的话
+boolean containsAll(Collection<?> c);         如果此collection包含指定collection中的所有元素，则返回true
+boolean addAll(Collection<? extends E> c);    将指定collection中的所有元素都添加到此collection中（可选操作）
+boolean removeAll(Collection<?> c);           移除此collection中那些也包含在指定collection中的所有元素
+boolean retainAll(Collection<?> c);           仅保留此collection中那些也包含在指定collection中的所有元素
+void clear();                                 移除此collection种的所有操作（可选操作）
+boolean equals(Object o);                     比较此collection与指定对象是否相等
+int hashCode();                               返回此collection的哈希码值
 ```
 上面的方法相信大家都非常熟悉，下面介绍它的三个子接口
 ##### 1、List集合(有序，可重复)
@@ -63,17 +63,30 @@ Map：一组成对的“键值对”对象，允许你使用键来查找值，�
 ***Vector：*** 是矢量队列，和ArrayList一样，它也是一个动态数组，由数组实现。但是ArrayList是非线程安全的，而Vector是线程安全的。<br>
 ***Stack：*** 是栈，它继承于Vector。它的特性是：先进后出(FILO, First In Last Out)。<br>
 基于上：<br>
-(01) 对于需要快速插入，删除元素，应该使用LinkedList。<br>
-(02) 对于需要快速随机访问元素，应该使用ArrayList。<br>
-(03) 对于“单线程环境” 或者 “多线程环境，但List仅仅只会被单个线程操作”，此时应该使用非同步的类。多线程使用Vector<br>
+(1) 对于需要快速插入，删除元素，应该使用LinkedList。<br>
+(2) 对于需要快速随机访问元素，应该使用ArrayList。<br>
+(3) 对于“单线程环境” 或者 “多线程环境，但List仅仅只会被单个线程操作”，此时应该使用非同步的类。多线程使用Vector<br>
 
 ##### 2、Set集合实现类
 ###### HashSet TreeSet LinkedHashSet 区别
-***HashSet:***<br>
-***TreeSet:***<br>
-***LinkedHashSet:***<br>
+***HashSet:*** <br>
+(1)HashSet中不能有相同的元素，可以有一个Null元素，存入的元素是无序的 <br>
+(2)HashSet底层数据结构是哈希表，哈希表就是存储唯一系列的表，而哈希值是由对象的hashCode()方法生成,hashCode()和equals()方法确保HashSet值是唯一的<br>
+(3)非线程安全<br>
+(4)添加、删除操作时间复杂度都是O(1)。<br>
+***TreeSet:*** <br>
+(1)TreeSet是中不能有相同元素，不可以有Null元素，根据元素的自然顺序进行排序 <br>
+(2)TreeSet底层的数据结构是红黑树(一种自平衡二叉查找树),保证元素的排序和唯一性 <br>
+(3)非线程安全 <br>
+(4)添加、删除操作时间复杂度都是O(log(n)) <br>
+***LinkedHashSet:*** <br>
+(1)LinkedHashSet中不能有相同元素，可以有一个Null元素，元素严格按照放入的顺序排列。<br>
+(2)LinkedHashSet底层数据结构由哈希表和链表组成,链表保证了元素的有序即存储和取出一致，哈希表保证了元素的唯一性<br>
+(3)非线程安全<br>
+(4)添加、删除操作时间复杂度都是O(1)。<br>
 
-
+###### 小结
+通过以上特点可以分析出，三者都保证了元素的唯一性，如果无排序要求可以选用HashSet；如果想取出元素的顺序和放入元素的顺序相同，那么可以选用LinkedHashSet。如果想插入、删除立即排序或者按照一定规则排序可以选用TreeSet
 
 
 
