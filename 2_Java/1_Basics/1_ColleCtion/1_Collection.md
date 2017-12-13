@@ -59,11 +59,11 @@ Map：一组成对的“键值对”对象，允许你使用键来查找值，�
 ##### 1、List集合实现类
 ###### ArrayList、LinkedList、Vector和Stack 区别
 ***ArrayList：***  <br>
-是一个数组队列，相当于动态数组。它由数组实现，随机访问效率高，随机插入、随机删除效率低。<br>
+是一个数组队列，相当于动态数组。它由数组实现，随机访问效率高，随机插入、随机删除效率低。<br><br>
 ***LinkedList：***  <br>
-是一个双向链表。它也可以被当作堆栈、队列或双端队列进行操作。LinkedList随机访问效率低，但随机插入、随机删除效率低。<br>
+是一个双向链表。它也可以被当作堆栈、队列或双端队列进行操作。LinkedList随机访问效率低，但随机插入、随机删除效率低。<br><br>
 ***Vector：***  <br>
-是矢量队列，和ArrayList一样，它也是一个动态数组，由数组实现。但是ArrayList是非线程安全的，而Vector是线程安全的。<br>
+是矢量队列，和ArrayList一样，它也是一个动态数组，由数组实现。但是ArrayList是非线程安全的，而Vector是线程安全的。<br><br>
 ***Stack：***  <br>
 是栈，它继承于Vector。它的特性是：先进后出(FILO, First In Last Out)。<br>
 基于上：<br>
