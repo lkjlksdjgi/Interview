@@ -57,36 +57,50 @@ Map：一组成对的“键值对”对象，允许你使用键来查找值，�
 
 #### 四、大致说下Collection和Map的实现类
 ##### 1、List集合实现类
-###### ArrayList LinkedList Vector Stack 区别
-***ArrayList：*** 是一个数组队列，相当于动态数组。它由数组实现，随机访问效率高，随机插入、随机删除效率低。<br>
-***LinkedList：*** 是一个双向链表。它也可以被当作堆栈、队列或双端队列进行操作。LinkedList随机访问效率低，但随机插入、随机删除效率低。<br>
-***Vector：*** 是矢量队列，和ArrayList一样，它也是一个动态数组，由数组实现。但是ArrayList是非线程安全的，而Vector是线程安全的。<br>
-***Stack：*** 是栈，它继承于Vector。它的特性是：先进后出(FILO, First In Last Out)。<br>
+###### ArrayList、LinkedList、Vector和Stack 区别
+***ArrayList：***  <br>
+是一个数组队列，相当于动态数组。它由数组实现，随机访问效率高，随机插入、随机删除效率低。<br>
+***LinkedList：***  <br>
+是一个双向链表。它也可以被当作堆栈、队列或双端队列进行操作。LinkedList随机访问效率低，但随机插入、随机删除效率低。<br>
+***Vector：***  <br>
+是矢量队列，和ArrayList一样，它也是一个动态数组，由数组实现。但是ArrayList是非线程安全的，而Vector是线程安全的。<br>
+***Stack：***  <br>
+是栈，它继承于Vector。它的特性是：先进后出(FILO, First In Last Out)。<br>
 基于上：<br>
-(1) 对于需要快速插入，删除元素，应该使用LinkedList。<br>
-(2) 对于需要快速随机访问元素，应该使用ArrayList。<br>
-(3) 对于“单线程环境” 或者 “多线程环境，但List仅仅只会被单个线程操作”，此时应该使用非同步的类。多线程使用Vector<br>
+(1)、对于需要快速插入，删除元素，应该使用LinkedList。<br>
+(2)、对于需要快速随机访问元素，应该使用ArrayList。<br>
+(3)、对于“单线程环境” 或者 “多线程环境，但List仅仅只会被单个线程操作”，此时应该使用非同步的类。多线程使用Vector<br>
 
 ##### 2、Set集合实现类
-###### HashSet TreeSet LinkedHashSet 区别
+###### HashSet、TreeSet和LinkedHashSet 区别
 ***HashSet:*** <br>
-(1)HashSet中不能有相同的元素，可以有一个Null元素，存入的元素是无序的 <br>
-(2)HashSet底层数据结构是哈希表，哈希表就是存储唯一系列的表，而哈希值是由对象的hashCode()方法生成,hashCode()和equals()方法确保HashSet值是唯一的<br>
-(3)非线程安全<br>
-(4)添加、删除操作时间复杂度都是O(1)。<br><br>
+HashSet中不能有相同的元素，可以有一个Null元素，存入的元素是无序的；<br>
+HashSet底层数据结构是哈希表，哈希表就是存储唯一系列的表，而哈希值是由对象的hashCode()方法生成,hashCode()和equals()方法确保HashSet值是唯一的；<br>
+HashSet是非线程安全的；添加、删除操作时间复杂度都是O(1) <br> <br>
 ***TreeSet:*** <br>
-(1)TreeSet是中不能有相同元素，不可以有Null元素，根据元素的自然顺序进行排序 <br>
-(2)TreeSet底层的数据结构是红黑树(一种自平衡二叉查找树),保证元素的排序和唯一性 <br>
-(3)非线程安全 <br>
-(4)添加、删除操作时间复杂度都是O(log(n)) <br><br>
+TreeSet是中不能有相同元素，不可以有Null元素，根据元素的自然顺序进行排序； <br>
+TreeSet底层的数据结构是红黑树(一种自平衡二叉查找树),保证元素的排序和唯一性； <br>
+TreeSet是非线程安全的；添加、删除操作时间复杂度都是O(log(n)) <br> <br>
+
 ***LinkedHashSet:*** <br>
-(1)LinkedHashSet中不能有相同元素，可以有一个Null元素，元素严格按照放入的顺序排列。<br>
-(2)LinkedHashSet底层数据结构由哈希表和链表组成,链表保证了元素的有序即存储和取出一致，哈希表保证了元素的唯一性<br>
-(3)非线程安全<br>
-(4)添加、删除操作时间复杂度都是O(1)。<br><br>
+LinkedHashSet中不能有相同元素，可以有一个Null元素，元素严格按照放入的顺序排列。<br>
+LinkedHashSet底层数据结构由哈希表和链表组成,链表保证了元素的有序即存储和取出一致，哈希表保证了元素的唯一性<br>
+LinkedHashSet是非线程安全的；添加、删除操作时间复杂度都是O(1) <br> <br>
 
 ###### 小结
 通过以上特点可以分析出，三者都保证了元素的唯一性，如果无排序要求可以选用HashSet；如果想取出元素的顺序和放入元素的顺序相同，那么可以选用LinkedHashSet。如果想插入、删除立即排序或者按照一定规则排序可以选用TreeSet
 
+##### 3、Map集合实现类
+###### HashMap、Hashtable、ConcurrentHashMap、LinkedHashMap和TreeMap 区别
+***HashMap***  <br>
+HashMap是最常用的Map，它根据键的HashCode值存储数据，根据键可以直接获取它的值，具有很快的访问速度，遍历时，取得数据的顺序是完全随机的。因为键对象不可以重复，所以HashMap最多只允许一条记录的键为Null，允许多条记录的值为Null，是非同步的<br><br>
+***Hashtable***  <br>
+Hashtable与HashMap类似，是HashMap的线程安全版，它支持线程的同步，即任一时刻只有一个线程能写Hashtable，因此也导致了Hashtale在写入时会比较慢，它继承自Dictionary类，不同的是它不允许记录的键或者值为null，同时效率较低。<br><br>
+***ConcurrentHashMap***  <br>
+线程安全，并且锁分离。ConcurrentHashMap内部使用段(Segment)来表示这些不同的部分，每个段其实就是一个小的hash table，它们有自己的锁。只要多个修改操作发生在不同的段上，它们就可以并发进行。<br><br>
+***LinkedHashMap***  <br>
+LinkedHashMap保存了记录的插入顺序，在用Iteraor遍历LinkedHashMap时，先得到的记录肯定是先插入的，在遍历的时候会比HashMap慢，有HashMap的全部特性。<br><br>
+***TreeMap***  <br>
+TreeMap实现SortMap接口，能够把它保存的记录根据键排序，默认是按键值的升序排序（自然顺序），也可以指定排序的比较器，当用Iterator遍历TreeMap时，得到的记录是排过序的。不允许key值为空，非同步的；<br><br>
 
 
