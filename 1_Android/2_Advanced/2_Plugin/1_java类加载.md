@@ -44,7 +44,11 @@ file:/D:/Study_Space/ClassLoaderDemo/ClassLoaderDemo/bin/
 从打印结果可看到，AppClassLoader主要加载CLASSPATH路径下类，还有一些第三方包等，也就是加载我们应用程序的类和第三方库<br><br>
 
 ##### 2、ExtClassLoader(扩展类加载器)
-提到ExtClassLoader，这里必须注意一下两个概念的区别：父类加载器和类中继承，父类加载器不像继承，它是没有父子关系的
+提到ExtClassLoader，这里必须注意一下两个概念的区别：父类加载器和类中继承，父类加载器不像继承，它是没有父子关系的,看一张ClassLoader类的继承关系图<br>
+![](https://github.com/tongsiw/Interview/blob/master/picture/java_classloader.png)
+可以看到，AppClassLoader的父类是URLClassLoader，但是AppClassLoader的父类加载器是ExtClassLoader，看下面代码输出结果
+
+
 ```
 public class Main {
 	
