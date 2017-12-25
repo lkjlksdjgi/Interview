@@ -45,9 +45,8 @@ file:/D:/Study_Space/ClassLoaderDemo/ClassLoaderDemo/bin/
 
 ##### 2、ExtClassLoader(扩展类加载器)
 提到ExtClassLoader，这里必须注意一下两个概念的区别：父类加载器和类中继承，父类加载器不像继承，它是没有父子关系的,看一张ClassLoader类的继承关系图<br>
-![](https://github.com/tongsiw/Interview/blob/master/picture/java_classloader.png)
+![](https://github.com/tongsiw/Interview/blob/master/picture/java_classloader.png) <br>
 可以看到，AppClassLoader的父类是URLClassLoader，但是AppClassLoader的父类加载器是ExtClassLoader，看下面代码输出结果
-
 
 ```
 public class Main {
@@ -88,6 +87,55 @@ file:/C:/MySoft/Develop_File/jdk1.8/jre/lib/ext/sunmscapi.jar
 file:/C:/MySoft/Develop_File/jdk1.8/jre/lib/ext/sunpkcs11.jar
 file:/C:/MySoft/Develop_File/jdk1.8/jre/lib/ext/zipfs.jar
 ```
+
+##### 3、BootstrapClassLoader(根类加载器)
+看到这里，是不是已经想到BootstrapClassLoader是ExtClassLoader的父类加载器呢。答案是错误的，因为BootstrapClassLoader是用C++实现的，他没有对应的java类，所以BootstrapClassLoader不是ExtClassLoader的父类加载器。而且因为使用C++实现的，所以想要获取它的加载路径，就必须用特殊的手段去获取：通过看AppClassLoader和ExtClassLoader源码(后面会有源码解析)我们知道，他们都是Launcher的内部类，而Launcher提供了一个方法(getBootstrapClassPath)，来获取BootstrapClassLoader的加载路径，所以用什么手段来获取BootstrapClassLoader的加载路径，就呼之欲出了。
+
+```
+public class Main {
+	
+
+	public static void main(String[] args) {
+	        
+	        try {
+				Class launcherClass = Class.forName("sun.misc.Launcher");
+				Method methodGetBootstrapClassPath= launcherClass.getDeclaredMethod("getBootstrapClassPath", null);
+				if(methodGetBootstrapClassPath!=null){
+					methodGetBootstrapClassPath.setAccessible(true);
+					Object obj = methodGetBootstrapClassPath.invoke(null, null);
+					if(obj!=null){
+						Method methodGetUrls =  obj.getClass().getDeclaredMethod("getURLs", null);
+						if(methodGetUrls != null){
+							methodGetUrls.setAccessible(true);
+							 URL[] bootstrapClassPath = (URL[]) methodGetUrls.invoke(obj, null);
+							 for (URL url: bootstrapClassPath) {
+						            System.out.print(url);
+						            System.out.print("\n");
+						        }
+						}
+					}
+				}
+				
+			} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				e.printStackTrace();
+			}
+	        
+	}
+}
+
+打印结果
+file:/C:/MySoft/Develop_File/jdk1.8/jre/lib/resources.jar
+file:/C:/MySoft/Develop_File/jdk1.8/jre/lib/rt.jar
+file:/C:/MySoft/Develop_File/jdk1.8/jre/lib/sunrsasign.jar
+file:/C:/MySoft/Develop_File/jdk1.8/jre/lib/jsse.jar
+file:/C:/MySoft/Develop_File/jdk1.8/jre/lib/jce.jar
+file:/C:/MySoft/Develop_File/jdk1.8/jre/lib/charsets.jar
+file:/C:/MySoft/Develop_File/jdk1.8/jre/lib/jfr.jar
+file:/C:/MySoft/Develop_File/jdk1.8/jre/classes
+
+```
+上面就是java中三个类加载器的加载路径，下面将会讲解一下类加载器是怎么加载一个类的
+
 
 
 
