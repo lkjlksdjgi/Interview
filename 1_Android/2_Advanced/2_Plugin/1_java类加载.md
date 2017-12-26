@@ -9,6 +9,7 @@ public class Long {
 }
 
 ```
+2、
 运行，会发生什么呢？
 
 #### 一、常见的ClassLoader介绍
@@ -136,8 +137,59 @@ file:/C:/MySoft/Develop_File/jdk1.8/jre/classes
 ```
 上面就是java中三个类加载器的加载路径，下面将会讲解一下类加载器是怎么加载一个类的
 
+#### 二、类加载器是怎么加载一个类的（双亲委托机制）
+类加载器主要通过loadClass这个方法去加载一个类的，下面看源码
+```
+public Class<?> loadClass(String name) throws ClassNotFoundException {
+		return loadClass(name, false);
+	}
+	
+protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
+        synchronized (getClassLoadingLock(name)) {
+            // First, check if the class has already been loaded 判断这个类是否被加载过，如果被加载过，直接返回
+            Class<?> c = findLoadedClass(name);
+            if (c == null) {//没有被加载过
+                long t0 = System.nanoTime();
+                try {
+                    if (parent != null) {//判断类加载器的父类加载器是否为空
+                        c = parent.loadClass(name, false);//调用父类加载器的loadClass
+                    } else {//父类加载器为空，就调用findBootstrapClass方法
+                        c = findBootstrapClassOrNull(name);
+                    }
+                } catch (ClassNotFoundException e) {
+                    // ClassNotFoundException thrown if class not found
+                    // from the non-null parent class loader
+                }
 
+                if (c == null) {
+                    // If still not found, then invoke findClass in order
+                    // to find the class.
+                    long t1 = System.nanoTime();
+                    c = findClass(name);
 
+                    // this is the defining class loader; record the stats
+                    sun.misc.PerfCounter.getParentDelegationTime().addTime(t1 - t0);
+                    sun.misc.PerfCounter.getFindClassTime().addElapsedTimeFrom(t1);
+                    sun.misc.PerfCounter.getFindClasses().increment();
+                }
+            }
+            if (resolve) {
+                resolveClass(c);
+            }
+            return c;
+        }
+    }
+    
+    private Class<?> findBootstrapClassOrNull(String name) {
+        if (!checkName(name)) return null;
+        return findBootstrapClass(name);
+    }
+
+    // return null if not found
+    private native Class<?> findBootstrapClass(String name);
+	
+```
+通过上面源码我们可以知道，如果当类加载器是AppClassLoader时，会判断它的父加载器parent是否为空，如果不为空，则调用父类也就是ExtClassLoader的loadClass(name, false)方法，这个时候又会判断一次ExtClassLoader的父类加载器是否为空，如果不为空，则调用ExtClassLoader的父类加载器loadClass方法，当然ExtClassLoader父类加载器是为空的，所以，最终会调用BootstrapClassLoader类加载器去加载一个类，这一套加载机制，叫做 ***父委托加载机制*** <br>
 
 
 
