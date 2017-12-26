@@ -137,7 +137,7 @@ file:/C:/MySoft/Develop_File/jdk1.8/jre/classes
 ```
 上面就是java中三个类加载器的加载路径，下面将会讲解一下类加载器是怎么加载一个类的
 
-#### 二、类加载器是怎么加载一个类的（双亲委托机制）
+#### 二、类加载器是怎么加载一个类的（父委托加载机制）
 类加载器主要通过loadClass这个方法去加载一个类的，下面看源码
 ```
 public Class<?> loadClass(String name) throws ClassNotFoundException {
@@ -190,7 +190,18 @@ protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundE
 	
 ```
 通过上面源码我们可以知道，如果当类加载器是AppClassLoader时，会判断它的父加载器parent是否为空，如果不为空，则调用父类也就是ExtClassLoader的loadClass(name, false)方法，这个时候又会判断一次ExtClassLoader的父类加载器是否为空，如果不为空，则调用ExtClassLoader的父类加载器loadClass方法，当然ExtClassLoader父类加载器是为空的，所以，最终会调用BootstrapClassLoader类加载器去加载一个类，这一套加载机制，叫做 ***父委托加载机制*** <br>
+来一张图，方便理解 <br>
+![](https://github.com/tongsiw/Interview/blob/master/picture/classLoader_ParentLoading.png) <br><br>
 
+#### 三、父委托加载机制的好处
+现在咱们回头看看最开始那个问题，你会发现回报一个错误
+```
+错误: 在类 java.lang.Long 中找不到 main 方法, 请将 main 方法定义为:
+   public static void main(String[] args)
+否则 JavaFX 应用程序类必须扩展javafx.application.Application
+```
+现在应该明白，为什么会报一个这样的错误了把。就是因为父委托类加载机制。那父委托加载机制有什么好处呢？<br>
+这样可以提高软件系统的安全性。如果，别人自己写了一个Long类，在Long类里面添加一些恶意代码，所以很有可能会有人利用这个漏洞去攻击你的程序。
 
 
 
